@@ -1,0 +1,55 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html><head>
+<title>Static Call Graph - [.\Objects\led_c.axf]</title></head>
+<body><HR>
+<H1>Static Call Graph for image .\Objects\led_c.axf</H1><HR>
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060061: Last Updated: Sun Dec 28 09:13:12 2025
+<BR><P>
+<H3>Maximum Stack Usage =          0 bytes + Unknown(Untraceable Function Pointers)</H3><H3>
+Call chain for Maximum Stack Depth:</H3>
+
+<P>
+<H3>
+Function Pointers
+</H3><UL>
+ <LI><a href="#[0]">Reset_Handler</a> from start.o(.text) referenced from start.o(RESET)
+ <LI><a href="#[1]">mymain</a> from main.o(i.mymain) referenced from start.o(.text)
+ <LI><a href="#[2]">putchar</a> from uart.o(i.putchar) referenced from main.o(i.mymain)
+</UL>
+<P>
+<H3>
+Global Symbols
+</H3>
+<P><STRONG><a name="[0]"></a>Reset_Handler</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, start.o(.text))
+<BR>[Address Reference Count : 1]<UL><LI> start.o(RESET)
+</UL>
+<P><STRONG><a name="[5]"></a>copy_myself</STRONG> (Thumb, 36 bytes, Stack size 16 bytes, main.o(i.copy_myself), UNUSED)
+
+<P><STRONG><a name="[3]"></a>delay</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, main.o(i.delay))
+<BR><BR>[Called By]<UL><LI><a href="#[1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mymain
+</UL>
+
+<P><STRONG><a name="[6]"></a>getchar</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, uart.o(i.getchar), UNUSED)
+
+<P><STRONG><a name="[1]"></a>mymain</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, main.o(i.mymain))
+<BR><BR>[Calls]<UL><LI><a href="#[3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> start.o(.text)
+</UL>
+<P><STRONG><a name="[2]"></a>putchar</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, uart.o(i.putchar))
+<BR><BR>[Called By]<UL><LI><a href="#[4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;putstr
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> main.o(i.mymain)
+</UL>
+<P><STRONG><a name="[4]"></a>putstr</STRONG> (Thumb, 22 bytes, Stack size 4 bytes, uart.o(i.putstr), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;putchar
+</UL>
+
+<P><STRONG><a name="[7]"></a>uart_init</STRONG> (Thumb, 68 bytes, Stack size 0 bytes, uart.o(i.uart_init), UNUSED)
+<P>
+<H3>
+Local Symbols
+</H3><P>
+<H3>
+Undefined Global Symbols
+</H3><HR></body></html>

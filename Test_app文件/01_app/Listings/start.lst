@@ -1,0 +1,115 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         
+    2 00000000                 PRESERVE8
+    3 00000000                 THUMB
+    4 00000000         
+    5 00000000         
+    6 00000000         ; Vector Table Mapped to Address 0 at Reset
+    7 00000000                 AREA             RESET, DATA, READONLY
+    8 00000000                 EXPORT           __Vectors
+    9 00000000         
+   10 00000000 20010000 
+                       __Vectors
+                               DCD              0x20000000+0x10000
+   11 00000004 00000000        DCD              Reset_Handler ; Reset Handler
+   12 00000008         
+   13 00000008                 AREA             |.text|, CODE, READONLY
+   14 00000000         
+   15 00000000         ; Reset handler
+   16 00000000         Reset_Handler
+                               PROC
+   17 00000000                 EXPORT           Reset_Handler             [WEAK
+]
+   18 00000000                 IMPORT           mymain
+   19 00000000         ;IMPORT  copy_myself
+   20 00000000         ;IMPORT |Image$$ER_IROM1$$Length|;‰ª£Á†ÅÊÆµÈïøÂ∫¶
+   21 00000000         
+   22 00000000         ;adr r0, Reset_Handler   ;r0 = 0x08009000
+   23 00000000         ;bic r0,r0,#0xff
+   24 00000000         
+   25 00000000         ;ldr r1, =__Vectors;r1 = 0x20000000
+   26 00000000         ;ldr r2,=|Image$$ER_IROM1$$Length|
+   27 00000000         
+   28 00000000         ;BL copy_myself
+   29 00000000         ;LDR SP, =(0x20000000+0x10000)
+   30 00000000         ;BL mymain
+   31 00000000 F8DF F000       ldr              pc,=mymain
+   32 00000004         
+   33 00000004                 ENDP
+   34 00000004         
+   35 00000004                 END
+              00000000 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
+ork --depend=.\objects\start.d -o.\objects\start.o -ID:\ProjectSet\Test_Bootloa
+der_1220\03_BootLoader∏˘æ›Õ∑≤ø–≈œ¢∏¥÷∆APP\01_app\RTE -I"D:\SingleChip\32\Keil5 
+Software\Keil\STM32F1xx_DFP\2.4.1\Device\Include" -I"D:\SingleChip\32\Keil5 Sof
+tware\ARM\CMSIS\Include" --predefine="__UVISION_VERSION SETA 518" --predefine="
+STM32F10X_HD SETA 1" --list=.\listings\start.lst start.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 7 in file start.s
+   Uses
+      None
+Comment: RESET unused
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 10 in file start.s
+   Uses
+      At line 8 in file start.s
+Comment: __Vectors used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 13 in file start.s
+   Uses
+      None
+Comment: .text unused
+Reset_Handler 00000000
+
+Symbol: Reset_Handler
+   Definitions
+      At line 16 in file start.s
+   Uses
+      At line 11 in file start.s
+      At line 17 in file start.s
+
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+mymain 00000000
+
+Symbol: mymain
+   Definitions
+      At line 18 in file start.s
+   Uses
+      At line 31 in file start.s
+Comment: mymain used once
+1 symbol
+339 symbols in table

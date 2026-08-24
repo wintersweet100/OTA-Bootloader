@@ -1,0 +1,11 @@
+debug/filetransfermanager.o
+debug/filetransferprotocol.o
+debug/main.o
+debug/widget.o
+debug/bootloaderpage.o
+debug/networkpage.o
+debug/moc_filetransfermanager.o
+debug/moc_filetransferprotocol.o
+debug/moc_widget.o
+debug/moc_bootloaderpage.o
+debug/moc_networkpage.o

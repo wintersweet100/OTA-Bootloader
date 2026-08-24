@@ -1,0 +1,230 @@
+
+========================================================================
+
+** ELF Header Information
+
+    File Name: Objects\led_c.axf
+
+    Machine class: ELFCLASS32 (32-bit)
+    Data encoding: ELFDATA2LSB (Little endian)
+    Header version: EV_CURRENT (Current version)
+    Operating System ABI: none
+    ABI Version: 0
+    File Type: ET_EXEC (Executable) (2)
+    Machine: EM_ARM (ARM)
+
+    Image Entry point: Not specified
+    Flags: EF_ARM_ABI_FLOAT_SOFT (0x05000200)
+
+    ARM ELF revision: 5 (ABI version 2)
+
+    Conforms to Soft float procedure-call standard
+
+    Built with
+    Component: ARM Compiler 5.06 update 1 (build 61) Tool: armasm [4d35a5]
+    Component: ARM Compiler 5.06 update 1 (build 61) Tool: armlink [4d35a8]
+
+    Header size: 52 bytes (0x34)
+    Program header entry size: 32 bytes (0x20)
+    Section header entry size: 40 bytes (0x28)
+
+    Program header entries: 1
+    Section header entries: 14
+
+    Program header offset: 8496 (0x00002130)
+    Section header offset: 8528 (0x00002150)
+
+    Section header string table index: 13
+
+========================================================================
+
+** Program header #0 (PT_LOAD) [PF_X + PF_R]
+    Size : 252 bytes
+    Virtual address: 0x20000000 (Alignment 4)
+
+
+========================================================================
+
+** Section #1 'ER_IROM1' (SHT_PROGBITS) [SHF_ALLOC + SHF_EXECINSTR]
+    Size   : 252 bytes (alignment 4)
+    Address: 0x20000000
+
+    $d.realdata
+    RESET
+    __Vectors
+        0x20000000:    20010000    ...     DCD    536936448
+        0x20000004:    20000009    ...     DCD    536870921
+    $t
+    .text
+    Reset_Handler
+        0x20000008:    f8dff000    ....    LDR      pc,[pc,#0] ; [0x2000000c] = 0x20000059
+    $d
+        0x2000000c:    20000059    Y..     DCD    536871001
+    $t
+    i.copy_myself
+    copy_myself
+        0x20000010:    b570        p.      PUSH     {r4-r6,lr}
+        0x20000012:    4603        .F      MOV      r3,r0
+        0x20000014:    2000        .       MOVS     r0,#0
+        0x20000016:    e004        ..      B        0x20000022 ; copy_myself + 18
+        0x20000018:    f8534020    S. @    LDR      r4,[r3,r0,LSL #2]
+        0x2000001c:    f8414020    A. @    STR      r4,[r1,r0,LSL #2]
+        0x20000020:    1c40        @.      ADDS     r0,r0,#1
+        0x20000022:    17d5        ..      ASRS     r5,r2,#31
+        0x20000024:    eb027595    ...u    ADD      r5,r2,r5,LSR #30
+        0x20000028:    2601        .&      MOVS     r6,#1
+        0x2000002a:    eb0605a5    ....    ADD      r5,r6,r5,ASR #2
+        0x2000002e:    4285        .B      CMP      r5,r0
+        0x20000030:    dcf2        ..      BGT      0x20000018 ; copy_myself + 8
+        0x20000032:    bd70        p.      POP      {r4-r6,pc}
+    i.delay
+    delay
+        0x20000034:    bf00        ..      NOP      
+        0x20000036:    1e01        ..      SUBS     r1,r0,#0
+        0x20000038:    f1a00001    ....    SUB      r0,r0,#1
+        0x2000003c:    d1fb        ..      BNE      0x20000036 ; delay + 2
+        0x2000003e:    4770        pG      BX       lr
+    i.getchar
+    getchar
+        0x20000040:    4904        .I      LDR      r1,[pc,#16] ; [0x20000054] = 0x40013800
+        0x20000042:    bf00        ..      NOP      
+        0x20000044:    6808        .h      LDR      r0,[r1,#0]
+        0x20000046:    f0000020    .. .    AND      r0,r0,#0x20
+        0x2000004a:    2800        .(      CMP      r0,#0
+        0x2000004c:    d0fa        ..      BEQ      0x20000044 ; getchar + 4
+        0x2000004e:    6848        Hh      LDR      r0,[r1,#4]
+        0x20000050:    4770        pG      BX       lr
+    $d
+        0x20000052:    0000        ..      DCW    0
+        0x20000054:    40013800    .8.@    DCD    1073821696
+    $t
+    i.mymain
+    mymain
+        0x20000058:    2441        A$      MOVS     r4,#0x41
+        0x2000005a:    4d06        .M      LDR      r5,[pc,#24] ; [0x20000074] = 0x2000007d
+        0x2000005c:    e009        ..      B        0x20000072 ; mymain + 26
+        0x2000005e:    4620         F      MOV      r0,r4
+        0x20000060:    1c62        b.      ADDS     r2,r4,#1
+        0x20000062:    b2d4        ..      UXTB     r4,r2
+        0x20000064:    47a8        .G      BLX      r5
+        0x20000066:    4804        .H      LDR      r0,[pc,#16] ; [0x20000078] = 0xf4240
+        0x20000068:    f7ffffe4    ....    BL       delay ; 0x20000034
+        0x2000006c:    2c5a        Z,      CMP      r4,#0x5a
+        0x2000006e:    d100        ..      BNE      0x20000072 ; mymain + 26
+        0x20000070:    2441        A$      MOVS     r4,#0x41
+        0x20000072:    e7f4        ..      B        0x2000005e ; mymain + 6
+    $d
+        0x20000074:    2000007d    }..     DCD    536871037
+        0x20000078:    000f4240    @B..    DCD    1000000
+    $t
+    i.putchar
+    putchar
+        0x2000007c:    4904        .I      LDR      r1,[pc,#16] ; [0x20000090] = 0x40013800
+        0x2000007e:    bf00        ..      NOP      
+        0x20000080:    680a        .h      LDR      r2,[r1,#0]
+        0x20000082:    f0020280    ....    AND      r2,r2,#0x80
+        0x20000086:    2a00        .*      CMP      r2,#0
+        0x20000088:    d0fa        ..      BEQ      0x20000080 ; putchar + 4
+        0x2000008a:    6048        H`      STR      r0,[r1,#4]
+        0x2000008c:    4770        pG      BX       lr
+    $d
+        0x2000008e:    0000        ..      DCW    0
+        0x20000090:    40013800    .8.@    DCD    1073821696
+    $t
+    i.putstr
+    putstr
+        0x20000094:    b500        ..      PUSH     {lr}
+        0x20000096:    4603        .F      MOV      r3,r0
+        0x20000098:    e003        ..      B        0x200000a2 ; putstr + 14
+        0x2000009a:    7818        .x      LDRB     r0,[r3,#0]
+        0x2000009c:    f7ffffee    ....    BL       putchar ; 0x2000007c
+        0x200000a0:    1c5b        [.      ADDS     r3,r3,#1
+        0x200000a2:    7818        .x      LDRB     r0,[r3,#0]
+        0x200000a4:    2800        .(      CMP      r0,#0
+        0x200000a6:    d1f8        ..      BNE      0x2000009a ; putstr + 6
+        0x200000a8:    bd00        ..      POP      {pc}
+        0x200000aa:    0000        ..      MOVS     r0,r0
+    i.uart_init
+    uart_init
+        0x200000ac:    4910        .I      LDR      r1,[pc,#64] ; [0x200000f0] = 0x40013800
+        0x200000ae:    4811        .H      LDR      r0,[pc,#68] ; [0x200000f4] = 0x40021018
+        0x200000b0:    6802        .h      LDR      r2,[r0,#0]
+        0x200000b2:    f2440304    D...    MOV      r3,#0x4004
+        0x200000b6:    431a        .C      ORRS     r2,r2,r3
+        0x200000b8:    6002        .`      STR      r2,[r0,#0]
+        0x200000ba:    480f        .H      LDR      r0,[pc,#60] ; [0x200000f8] = 0x40010804
+        0x200000bc:    6802        .h      LDR      r2,[r0,#0]
+        0x200000be:    f02202f0    "...    BIC      r2,r2,#0xf0
+        0x200000c2:    6002        .`      STR      r2,[r0,#0]
+        0x200000c4:    6802        .h      LDR      r2,[r0,#0]
+        0x200000c6:    f0420290    B...    ORR      r2,r2,#0x90
+        0x200000ca:    6002        .`      STR      r2,[r0,#0]
+        0x200000cc:    6802        .h      LDR      r2,[r0,#0]
+        0x200000ce:    f4226270    ".pb    BIC      r2,r2,#0xf00
+        0x200000d2:    6002        .`      STR      r2,[r0,#0]
+        0x200000d4:    6802        .h      LDR      r2,[r0,#0]
+        0x200000d6:    f4426280    B..b    ORR      r2,r2,#0x400
+        0x200000da:    6002        .`      STR      r2,[r0,#0]
+        0x200000dc:    2245        E"      MOVS     r2,#0x45
+        0x200000de:    608a        .`      STR      r2,[r1,#8]
+        0x200000e0:    f242020c    B...    MOV      r2,#0x200c
+        0x200000e4:    60ca        .`      STR      r2,[r1,#0xc]
+        0x200000e6:    690a        .i      LDR      r2,[r1,#0x10]
+        0x200000e8:    f4225240    ".@R    BIC      r2,r2,#0x3000
+        0x200000ec:    610a        .a      STR      r2,[r1,#0x10]
+        0x200000ee:    4770        pG      BX       lr
+    $d
+        0x200000f0:    40013800    .8.@    DCD    1073821696
+        0x200000f4:    40021018    ...@    DCD    1073877016
+        0x200000f8:    40010804    ...@    DCD    1073809412
+
+** Section #2 '.debug_abbrev' (SHT_PROGBITS)
+    Size   : 1476 bytes
+
+
+** Section #3 '.debug_frame' (SHT_PROGBITS)
+    Size   : 360 bytes
+
+
+** Section #4 '.debug_info' (SHT_PROGBITS)
+    Size   : 2408 bytes
+
+
+** Section #5 '.debug_line' (SHT_PROGBITS)
+    Size   : 680 bytes
+
+
+** Section #6 '.debug_loc' (SHT_PROGBITS)
+    Size   : 304 bytes
+
+
+** Section #7 '.debug_macinfo' (SHT_PROGBITS)
+    Size   : 44 bytes
+
+
+** Section #8 '.debug_pubnames' (SHT_PROGBITS)
+    Size   : 212 bytes
+
+
+** Section #9 '.symtab' (SHT_SYMTAB)
+    Size   : 544 bytes (alignment 4)
+    String table #10 '.strtab'
+    Last local symbol no. 23
+
+
+** Section #10 '.strtab' (SHT_STRTAB)
+    Size   : 360 bytes
+
+
+** Section #11 '.note' (SHT_NOTE)
+    Size   : 20 bytes (alignment 4)
+
+
+** Section #12 '.comment' (SHT_PROGBITS)
+    Size   : 1628 bytes
+
+
+** Section #13 '.shstrtab' (SHT_STRTAB)
+    Size   : 156 bytes
+
+

@@ -1,0 +1,11 @@
+release/filetransfermanager.o
+release/filetransferprotocol.o
+release/main.o
+release/widget.o
+release/bootloaderpage.o
+release/networkpage.o
+release/moc_filetransfermanager.o
+release/moc_filetransferprotocol.o
+release/moc_widget.o
+release/moc_bootloaderpage.o
+release/moc_networkpage.o

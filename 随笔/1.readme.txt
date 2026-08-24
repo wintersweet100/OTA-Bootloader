@@ -1,0 +1,206 @@
+# 终端模块类设备IAP/OTA远程升级
+
+/*
+	author:liuzihe
+	Last updated date:15:28 2025/12/15
+*/
+/************************************************************/
+需要补充的知识点:
+1.bootloader的原理：
+
+2.梳理整个流程的操作：
+
+3.如何划分flash空间呢？【主】划分之后我要如何在不同的空间上烧录不同的内容呢？
+
+4.WIFI模块远程通讯上之后该如何将其与我原本的串口收发->shell控制命令结合在一块呢？
+
+5.
+
+
+
+### 关于shell命令交互的内部机理：(以flash 读写举例)
+
+#### 	大致操作流程:
+
+```
+	 用户输入命令
+	   	 ↓
+command.c: find_cmd() 查找命令
+  	 	 ↓
+执行对应的 cmd_func()
+ 		   ↓
+	    返回结果
+```
+
+#### 1.核心数据结构
+
+##### command.h
+
+```
+struct command {
+  char *name;        // 命令的名字，比如 "help"
+  char *short_help;  // 短帮助
+  char *long_help;   // 长帮助
+  
+  // 【关键】这是一个函数指针！
+  // 它指向一个返回值为 int，参数为 (int, char**) 的函数
+  int (*function)(int argc, char **argv); 
+};
+```
+
+##### flash_cmd.h
+
+```
+struct flash_ops {
+  char *name;      //操作集名称
+  unsigned int (*read)(unsigned char *buf, unsigned int offset, unsigned int size);
+  unsigned int (*write)(unsigned char *buf, unsigned int offset, unsigned int size);
+  unsigned int (*erase)(unsigned int offset, unsigned int size);
+};
+
+struct flash_ops *get_flash(void);
+```
+
+#### 2.Flash操作层
+
+**作用：** 将具体的硬件操作封装成一个接口，便于后续扩展（如换成其他 Flash 芯片）
+
+##### stm_flash.c
+
+```
+static void stm32_flash_unlock(void)      //Unlock the FLASH control register access
+
+static void stm32_flash_lock(void)		//Locks the FLASH control register access
+
+//从flash中读size长度的数据到ram中
+static unsigned int stm32_flash_read(unsigned char *buf, unsigned int offset, unsigned int size)
+//从ram中写size长度的数据到flash中
+static unsigned int stm32_flash_write(unsigned char *buf, unsigned int offset, unsigned int size)
+//擦除flash的size大小的空间(全置1)，起始地址为offset
+static unsigned int stm32_flash_erase(unsigned int offset, unsigned int size)
+
+//定义具体的Flash操作函数
+static struct flash_ops stm32_flash = {
+    "stm32_flash",
+    stm32_flash_read,
+    stm32_flash_write,
+    stm32_flash_erase,
+};
+
+//获取Flash操作接口
+struct flash_ops *get_flash(void)
+{
+    return &stm32_flash;
+}
+```
+
+#### 3.命令处理层
+
+##### flash_cmd.c
+
+- `argc` — 参数个数（argv[0] 是命令名）
+- `argv` — 参数数组
+- `str2hex()` — 字符串转 16 进制（如 "0x08010000" → 0x08010000）
+- 返回值：0 成功，-1 失败
+
+```
+static int flash_f(int argc, char **argv)
+{
+	//  ★ 获取 Flash 操作接口---------【处理层与操作层的枢纽】
+	struct flash_ops *fp = get_flash();
+    unsigned char *buf;
+    unsigned int offset;
+    unsigned int size = 0;
+    unsigned int ret = 1;
+
+	 // ★ 参数解析// fp->read/fp->write/fp->erase
+	if (argc == 5)
+	{
+        buf    = (unsigned char *)str2hex(argv[2]); // RAM 地址
+        offset = str2hex(argv[3]);					// Flash 地址
+        size   = str2hex(argv[4]);					// 操作空间大小
+	}
+    else if (argc == 4)
+    {
+        offset = str2hex(argv[2]);
+        size   = str2hex(argv[3]);
+    }
+    else
+    {
+        return -1;
+    }
+
+	// ★ 命令分发
+    if (!strcmp(argv[1], "read"))
+        ret = fp->read(buf, offset, size);
+    else if (!strcmp(argv[1], "write"))
+        ret = fp->write(buf, offset, size);
+    else if (!strcmp(argv[1], "erase"))
+        ret = fp->erase(offset, size);
+    else 
+    {
+        return -1;
+    }
+    
+    // ★ 返回结果（成功返回 0，失败返回 -1）
+    return (ret == size) ? 0 : -1;
+}
+
+struct command flash_cmd = {
+	"flash",
+		
+	"read/write/erase flash\r\n",
+	
+	"Usage: \r\n"
+	"       flash read <ram_addr> <flash_addr> <size>\r\n"
+	"       flash write <ram_addr> <flash_addr> <size>\r\n"
+	"       flash erase <flash_addr> <size>\r\n",
+
+	flash_f,
+};
+```
+
+#### 4.命令注册与分发层
+
+##### command.c
+
+```
+extern struct command help_cmd;
+extern struct command rz_cmd;
+extern struct command go_cmd;
+extern struct command flash_cmd;
+extern struct command md_cmd;
+extern struct command InitWifi_cmd ;
+extern struct command InitEthernet_cmd;
+
+static struct command * g_commands[] = {
+	&help_cmd,
+	&rz_cmd,
+	&go_cmd,
+	&flash_cmd,
+	&md_cmd,
+	&InitWifi_cmd,
+	&InitEthernet_cmd,
+	NULL
+};
+
+//下面这两个函数在"help"命令操作时被调用
+//查找命令
+struct command ** get_cmds(void)
+{
+	return g_commands;
+}
+// 查找对比命令
+struct command *find_cmd(char *name)
+{
+	int i = 0;
+	while (g_commands[i])
+	{
+		if (strcmp(g_commands[i]->name, name) == 0)
+			return g_commands[i];
+		i++;
+	}
+	return NULL;
+}
+```
+

@@ -1,0 +1,53 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: μVision V5.18.0.0
+Copyright (C) 2016 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: 1324 12341, 2421, LIC=SDA0P-MR52E-30CNC-7KINC-D8AHR-G9FXQ
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Standard  Version: 5.18
+Toolchain Path:  D:\SingleChip\32\Keil5 Software\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 1 (build 61)
+Assembler:       Armasm.exe V5.06 update 1 (build 61)
+Linker/Locator:  ArmLink.exe V5.06 update 1 (build 61)
+Library Manager: ArmAr.exe V5.06 update 1 (build 61)
+Hex Converter:   FromElf.exe V5.06 update 1 (build 61)
+CPU DLL:         SARMCM3.DLL V5.18
+Dialog DLL:      DCM.DLL V1.13.6.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.18.0
+Dialog DLL:      TCM.DLL V1.14.8.0
+ 
+<h2>Project:</h2>
+D:\ProjectSet\Test_Bootloader_1220\03_BootLoader根据头部信息复制APP\01_app\led_c.uvprojx
+Project File Date:  12/21/2025
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 1 (build 61)', folder: 'D:\SingleChip\32\Keil5 Software\ARM\ARMCC\Bin'
+Rebuild target 'led_c'
+assembling start.s...
+compiling uart.c...
+compiling main.c...
+main.c(36): warning:  #111-D: statement is unreachable
+      return 0;
+main.c: 1 warning, 0 errors
+linking...
+.\Objects\led_c.axf: Warning: L6305W: Image does not have an entry point. (Not specified or not set due to multiple choices.)
+Program Size: Code=244 RO-data=8 RW-data=0 ZI-data=0  
+Finished: 0 information, 1 warning and 0 error messages.
+FromELF: creating hex file...
+After Build - User command #1: fromelf  --bin  --output=app.bin  Objects\led_c.axf
+After Build - User command #2: fromelf  --text  -a -c  --output=app.dis  Objects\led_c.axf
+".\Objects\led_c.axf" - 0 Error(s), 2 Warning(s).
+
+<h2>Collection of Component include folders:</h2>
+  D:\ProjectSet\Test_Bootloader_1220\03_BootLoader根据头部信息复制APP\01_app\RTE
+  D:\SingleChip\32\Keil5 Software\Keil\STM32F1xx_DFP\2.4.1\Device\Include
+
+<h2>Collection of Component Files used:</h2>
+Build Time Elapsed:  00:00:02
+</pre>
+</body>
+</html>

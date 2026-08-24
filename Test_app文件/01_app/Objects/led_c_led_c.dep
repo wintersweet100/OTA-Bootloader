@@ -1,0 +1,6 @@
+Dependencies for Project 'led_c', Target 'led_c': (DO NOT MODIFY !)
+F (.\main.c)(0x69480E19)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections-I D:\ProjectSet\Test_Bootloader_1220\03_BootLoader根据头部信息复制APP\01_app\RTE-I "D:\SingleChip\32\Keil5 Software\Keil\STM32F1xx_DFP\2.4.1\Device\Include"-I "D:\SingleChip\32\Keil5 Software\ARM\CMSIS\Include"-D__UVISION_VERSION="518" -DSTM32F10X_HD-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+I (uart.h)(0x69463DC6)
+F (.\start.s)(0x6947B2D7)(--cpu Cortex-M3 -g --apcs=interwork -I D:\ProjectSet\Test_Bootloader_1220\03_BootLoader根据头部信息复制APP\01_app\RTE-I "D:\SingleChip\32\Keil5 Software\Keil\STM32F1xx_DFP\2.4.1\Device\Include"-I "D:\SingleChip\32\Keil5 Software\ARM\CMSIS\Include"--pd "__UVISION_VERSION SETA 518" --pd "STM32F10X_HD SETA 1"--list .\listings\start.lst --xref -o .\objects\start.o --depend .\objects\start.d)
+F (.\uart.c)(0x69463D46)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections-I D:\ProjectSet\Test_Bootloader_1220\03_BootLoader根据头部信息复制APP\01_app\RTE-I "D:\SingleChip\32\Keil5 Software\Keil\STM32F1xx_DFP\2.4.1\Device\Include"-I "D:\SingleChip\32\Keil5 Software\ARM\CMSIS\Include"-D__UVISION_VERSION="518" -DSTM32F10X_HD-o .\objects\uart.o --omf_browse .\objects\uart.crf --depend .\objects\uart.d)
+I (uart.h)(0x69463DC6)
