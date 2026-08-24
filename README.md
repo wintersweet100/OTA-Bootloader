@@ -1,3 +1,5 @@
+实现视频：https://www.bilibili.com/video/BV1bLhK6LEgW/?
+
 # wintersweet100-OTA-Bootloader
 基于stm32F1系列单片机开发OTA功能；
 采用QT开发一款上位机；
